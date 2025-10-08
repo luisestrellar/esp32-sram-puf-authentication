@@ -1,0 +1,32 @@
+{
+  "name": "sram-puf-measurement-server",
+  "version": "1.0.0",
+  "description": "SRAM PUF Measurement Server - Collects and stores SRAM measurements from ESP32 devices",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [
+    "puf",
+    "sram",
+    "measurement",
+    "iot",
+    "esp32",
+    "data-collection"
+  ],
+  "author": "Christian Lepuschitz",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-basic-auth": "^1.2.1",
+    "sqlite3": "^5.1.6"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
+

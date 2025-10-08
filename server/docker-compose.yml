@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  # Authentication Server
+  auth-server:
+    build: ./auth-server
+    container_name: sram-puf-auth
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - NODE_ENV=production
+    volumes:
+      - ./auth-server/config.js:/usr/src/app/config.js
+    restart: unless-stopped
+    networks:
+      - sram-puf-network
+
+  # Measurement Server
+  measurement-server:
+    build: ./measurement-server
+    container_name: sram-puf-measurement
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - DB_PATH=/data/measurements.sqlite
+      # Change credentials below for production!
+      - ESP_USERNAME=esp
+      - ESP_PASSWORD=password
+      - NODE_ENV=production
+    volumes:
+      - measurement-data:/data
+    restart: unless-stopped
+    networks:
+      - sram-puf-network
+
+volumes:
+  measurement-data:
+    driver: local
+
+networks:
+  sram-puf-network:
+    driver: bridge

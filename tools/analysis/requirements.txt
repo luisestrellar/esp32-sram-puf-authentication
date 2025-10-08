@@ -1,0 +1,5 @@
+# Python dependencies for SRAM PUF analysis tools
+
+numpy>=1.21.0
+matplotlib>=3.4.0
+

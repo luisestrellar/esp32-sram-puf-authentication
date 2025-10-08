@@ -1,0 +1,73 @@
+/**
+ * ESP32 Configuration Template
+ * 
+ * HOW TO USE:
+ * 1. Copy this file to config.h (same directory)
+ * 2. Edit the values below
+ * 3. Include in your sketch: #include "config.h"
+ * 
+ * config.h is in .gitignore - your secrets stay safe!
+ */
+
+#ifndef CONFIG_H
+#define CONFIG_H
+
+// ============================================
+// WIFI CONFIGURATION
+// ============================================
+#define WIFI_SSID "YOUR_WIFI_SSID"
+#define WIFI_PASSWORD "YOUR_WIFI_PASSWORD"
+
+// ============================================
+// SERVER CONFIGURATION
+// ============================================
+// Authentication Server
+#define AUTH_SERVER_URL "http://192.168.1.100:8080/"
+
+// Measurement Server  
+#define MEASUREMENT_SERVER_URL "http://192.168.1.100:3000/api/sram"
+
+// ============================================
+// PUF CONFIGURATION
+// ============================================
+// Generate this using: tools/puf-challenge-generator/pufchallenge.py
+#define PUF_CHALLENGE "f3f3dfffefbabffff3fbff7fb6efbeff"
+
+// ============================================
+// SRAM Settings
+// ============================================
+#define SRAM_ADDRESS 0x50000000  // ESP32 RTC SLOW Memory address
+
+// SRAM_READ_SIZE - How many bytes to read from RTC SLOW Memory
+// 
+// TIP: Leave commented! Each sketch has the right default.
+// 
+// #define SRAM_READ_SIZE 128    // Auth & challenge generation (fast)
+// #define SRAM_READ_SIZE 8192   // Full analysis with Python tools
+
+// ============================================
+// PBKDF2 CONFIGURATION
+// ============================================
+// WARNING: These MUST match the Python script values!
+// Salt provides domain separation for this application
+#define PBKDF2_SALT "ESP32-SRAM-PUF-Auth-v1"
+#define PBKDF2_ITERATIONS 10000  // MUST be 10000!
+#define PBKDF2_KEY_LENGTH 32     // 256-bit key
+
+// Note: You can change the salt for your deployment, but it MUST
+// match exactly between ESP32 and Python scripts!
+// See: SALT_CONFIGURATION.md for details
+
+// ============================================
+// DEVICE CONFIGURATION
+// ============================================
+#define ESP_DEVICE_ID 1  // Unique ID for this ESP32
+
+// ============================================
+// DEBUG SETTINGS
+// ============================================
+#define SERIAL_BAUD_RATE 115200
+#define DEBUG_ENABLED true  // Set to false to disable debug output
+
+#endif // CONFIG_H
+
