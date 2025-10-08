@@ -15,14 +15,14 @@ I recommend opening **3 terminals** and labeling them:
 │ Terminal 1: Server Management                           │
 │ → Start/stop Docker containers                          │
 │ → Restart servers after config changes                  │
-│ → Always in: publish/server/                            │
+│ → Always in: server/                                    │
 └─────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────┐
 │ Terminal 2: Server Logs (Optional)                      │
 │ → Monitor uploads and authentication in real-time       │
 │ → See what's happening on the server                    │
-│ → Always in: publish/server/                            │
+│ → Always in: server/                                    │
 └─────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────┐
@@ -30,16 +30,10 @@ I recommend opening **3 terminals** and labeling them:
 │ → Generate PUF challenges                               │
 │ → Download measurements                                 │
 │ → Run analysis scripts                                  │
-│ → Starts in: publish/                                   │
 └─────────────────────────────────────────────────────────┘
 ```
 
 **All commands show full paths from repository root!**
-
-**Tips:** 
-- Use terminal tabs or splits for easy switching
-- Commands always start with `cd publish/...` so you know where you are
-- Can't find `publish/`? You're probably in the wrong directory!
 
 ---
 
@@ -73,7 +67,7 @@ Choose **one** deployment method:
 **Terminal 1 (Server Management):**
 ```bash
 # Navigate to server directory (from repository root)
-cd publish/server
+cd server
 
 # Start servers in background
 docker compose up -d --build
@@ -84,7 +78,7 @@ docker compose up -d --build
 
 **Verify servers are running:**
 ```bash
-# In Terminal 1 (still in publish/server/)
+# In Terminal 1 (still in server/)
 docker compose ps
 ```
 
@@ -115,7 +109,7 @@ docker compose up -d
 
 **Useful commands (Terminal 1):**
 ```bash
-# Still in publish/server/
+# Still in server/
 docker compose ps                    # Check status
 docker compose logs -f               # View all logs
 docker compose down                  # Stop servers
@@ -131,7 +125,7 @@ docker compose restart auth-server   # Restart one service
 **Terminal 1 (Measurement Server):**
 ```bash
 # From repository root
-cd publish/server/measurement-server
+cd server/measurement-server
 
 # Create .env file from template
 cp env.example .env
@@ -151,7 +145,7 @@ Server runs on http://localhost:3000
 **Terminal 2 (Authentication Server):**
 ```bash
 # From repository root (new terminal!)
-cd publish/server/auth-server
+cd server/auth-server
 npm install
 npm start
 ```
@@ -209,7 +203,7 @@ Uploading measurement...
 **Terminal 2 (Server Logs):**
 ```bash
 # From repository root
-cd publish/server
+cd server
 docker compose logs measurement-server -f
 ```
 
@@ -255,9 +249,6 @@ See the success rate table in Step 5 for detailed statistics.
 
 **Terminal 3 (Tools):**
 ```bash
-# From repository root
-cd publish
-
 # Download measurements for ESP ID 1
 curl -u "esp:password" http://localhost:3000/api/export/1 -o measurements.txt
 
@@ -269,7 +260,7 @@ curl -u "esp:password" http://localhost:3000/api/export/1 -o measurements.txt
 
 ### Generate PUF Challenge & API Token
 
-**Terminal 3 (still in publish/):**
+**Terminal 3:**
 ```bash
 # Navigate to tools
 cd tools/puf-challenge-generator
@@ -315,7 +306,7 @@ const apiKeys = {
 
 **Terminal 1 (Server Management):**
 ```bash
-# In publish/server/
+# In ./server/
 docker compose restart auth-server
 
 # If running manually, the server auto-reloads (with nodemon)
@@ -391,7 +382,7 @@ If you still have the logs from the measurement server running, press `Ctrl+C` t
 
 ```bash
 # From repository root
-cd publish/server
+cd server
 docker compose logs auth-server -f
 ```
 
@@ -502,7 +493,7 @@ Check bit stability and randomness. Choose one method:
 **Terminal 3 (Tools):**
 ```bash
 # From repository root
-cd publish/tools/analysis
+cd tools/analysis
 
 # Create and activate virtual environment
 python3 -m venv venv
@@ -524,7 +515,7 @@ deactivate
 **Terminal 3 (Tools):**
 ```bash
 # From repository root
-cd publish/tools/analysis
+cd tools/analysis
 
 # Install dependencies globally
 pip install -r requirements.txt
@@ -573,14 +564,14 @@ Want to verify servers work before connecting ESP32?
 **Terminal 1:**
 ```bash
 # From repository root
-cd publish/server/auth-server
+cd server/auth-server
 npm start
 ```
 
 **Terminal 2:**
 ```bash
 # From repository root (new terminal!)
-cd publish/server/auth-server
+cd server/auth-server
 node test_auth.js
 ```
 
